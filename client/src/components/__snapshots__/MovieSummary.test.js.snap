@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieSummary MovieSummary snapshot 1`] = `
+<styled.div>
+  <MovieTitle
+    onClick={[Function]}
+  >
+    Jurassic World
+  </MovieTitle>
+  <StarRating
+    rating={0}
+    setRating={[Function]}
+  />
+  <styled.p>
+    (
+    2015
+    )
+  </styled.p>
+  <styled.p>
+    TMDB score: 
+    6.9
+  </styled.p>
+</styled.div>
+`;

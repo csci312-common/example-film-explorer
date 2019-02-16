@@ -1,0 +1,38 @@
+{
+  "name": "film-explorer-server-sqlite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CS312 RDBMS-backed film explorer server",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint .",
+    "start": "node index.js",
+    "watch": "nodemon --ignore '*.test.js' index.js"
+  },
+  "keywords": [],
+  "author": "Michael Linderman <mlinderman@middlebury.edu>",
+  "contributors": [
+    "Michael Linderman <mlinderman@middlebury.edu>",
+    "Christopher Andrews <candrews@middlebury.edu>"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-promise-router": "^3.0.1",
+    "knex": "^0.16.3",
+    "objection": "^1.6.0",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.0.0"
+  }
+}
