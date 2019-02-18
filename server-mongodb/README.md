@@ -14,23 +14,29 @@ mongoimport --db film-explorer --collection movies --jsonArray movies.json --por
 
 ## Running
 
-In one terminal, start MongoDB with `npm run mongo` (equivalent to `mongod --config mongod.conf`). Then in another terminal launch the application server  with `npm run start` (equivalent to `node index.js`). By default the application is available at <http://localhost:3001>.
+In one terminal, start MongoDB with `npm run mongo` (equivalent to `mongod --config mongod.conf`). Then in another terminal launch the application server with `npm run start` (equivalent to `node index.js`). By default the application is available at <http://localhost:3001>.
 
 ## Development
 
 ### Linting with ESLint
 
-The server is configured with the aggressive [AirBnB ESLint rules](https://github.com/airbnb/javascript). You can run the linter with `npm run lint` or `npx eslint .`. Thee rules were installed with:
+The server is configured with the aggressive [AirBnB ESLint rules](https://github.com/airbnb/javascript). These rules were installed with:
 
 ```
 npx install-peerdeps --dev eslint-config-airbnb-base
 ```
 
-and `.eslintrc.json` configured with:
+and then `esling-config-prettier` package to disable the style rules that conflict with [Prettier](https://prettier.io)
+
+```
+npm install --save-dev eslint-config-prettier
+```
+
+and `.eslintrc.json` is configured with:
 
 ```
 {
-  "extends": "airbnb-base"
+  "extends": ["airbnb-base", "prettier"]
 }
 ```
 

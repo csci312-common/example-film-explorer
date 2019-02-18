@@ -8,7 +8,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoDB = require('mongodb');
 
-const mongoURL = process.env.MONGODB_URI || 'mongodb://localhost:5000/film-explorer';
+const mongoURL =
+  process.env.MONGODB_URI || 'mongodb://localhost:5000/film-explorer';
 const { MongoClient, ObjectID } = mongoDB;
 
 // Create Express application
@@ -34,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
 const corsOptions = {
   methods: ['GET', 'PUT', 'POST'],
   origin: '*',
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type']
 };
 
 // Set up express middleware
@@ -42,27 +43,31 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.get('/api/movies', (request, response) => {
-  db.collection('movies').find().toArray((err, documents) => {
-    if (err) {
-      console.error(err);
-      response.sendStatus(500);
-    } else {
-      response.send(documents);
-    }
-  });
+  db.collection('movies')
+    .find()
+    .toArray((err, documents) => {
+      if (err) {
+        console.error(err);
+        response.sendStatus(500);
+      } else {
+        response.send(documents);
+      }
+    });
 });
 
 app.get('/api/movies/:id', (request, response) => {
   const movieId = parseInt(request.params.id, 10);
 
-  db.collection('movies').find({ id: movieId }).next((err, document) => {
-    if (err) {
-      console.error(err);
-      response.sendStatus(500);
-    } else {
-      response.send(document);
-    }
-  });
+  db.collection('movies')
+    .find({ id: movieId })
+    .next((err, document) => {
+      if (err) {
+        console.error(err);
+        response.sendStatus(500);
+      } else {
+        response.send(document);
+      }
+    });
 });
 
 app.put('/api/movies/:id', (request, response) => {
@@ -71,17 +76,22 @@ app.put('/api/movies/:id', (request, response) => {
   const movie = request.body;
   movie._id = ObjectID.createFromHexString(movie._id);
 
-  db.collection('movies').findOneAndUpdate({ id: movieId }, { $set: movie }, { returnOriginal: false }, (err, result) => {
-    if (err || result.ok !== 1) {
-      console.error(err);
-      response.sendStatus(500);
-    } else {
-      response.send(result.value);
+  db.collection('movies').findOneAndUpdate(
+    { id: movieId },
+    { $set: movie },
+    { returnOriginal: false },
+    (err, result) => {
+      if (err || result.ok !== 1) {
+        console.error(err);
+        response.sendStatus(500);
+      } else {
+        response.send(result.value);
+      }
     }
-  });
+  );
 });
 
-MongoClient.connect(mongoURL, (err, database) => {
+MongoClient.connect(mongoURL, { useNewUrlParser: true }, (err, database) => {
   if (err) {
     console.error(err);
   } else {

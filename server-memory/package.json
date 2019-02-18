@@ -1,7 +1,8 @@
 {
   "name": "film-explorer-server-memory",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "CS312 memory-backed film explorer server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,6 +12,10 @@
   },
   "keywords": [],
   "author": "Michael Linderman <mlinderman@middlebury.edu>",
+  "contributors": [
+    "Michael Linderman <mlinderman@middlebury.edu>",
+    "Christopher Andrews <candrews@middlebury.edu>"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.18.2",

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:mongo": "concurrently \"npm start --prefix server-mongodb\" \"npm start --prefix client\"",
+    "start:mongodb": "concurrently \"npm run watch --prefix server-mongodb\" \"npm start --prefix client\"",
     "start:memory": "concurrently \"npm run watch --prefix server-memory\" \"npm start --prefix client\"",
     "start:sqlite": "concurrently \"npm run watch --prefix server-sqlite\" \"npm start --prefix client\"",
     "heroku-postbuild": "npm install --prefix client && npm install --only=dev --no-shrinkwrap --prefix client && npm run build --prefix client && npm install --prefix server-mongodb",
@@ -37,7 +37,7 @@
     }
   },
   "lint-staged": {
-    "{client/src,server-memory,server-sqlite}/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "{client/src,server-memory,server-sqlite,server-mongodb}/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --single-quote --write",
       "git add"
     ]

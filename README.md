@@ -6,7 +6,7 @@ The client was created with [create-react-app](https://github.com/facebookincuba
 
 ## Running the Application
 
-The combined application, client and server, can be run with `npm run start:[memory,mongo,sqlite]`, e.g. `npm run start:memory`, in the top-level directory. `npm run start:[memory,mongo,sqlite]` launches the client development server on http://localhost:3000 and the specified server on http://localhost:3001 (one of memory, mongo, sqlite). By setting the `proxy` field in the client `package.json`, the client development server will proxy any unrecognized requests to the server.
+The combined application, client and server, can be run with `npm run start:[memory,mongodb,sqlite]`, e.g. `npm run start:memory`, in the top-level directory. `npm run start:[memory,mongodb,sqlite]` launches the client development server on http://localhost:3000 and the specified server on http://localhost:3001 (one of memory, mongo, sqlite). By setting the `proxy` field in the client `package.json`, the client development server will proxy any unrecognized requests to the server.
 
 *Note* that for the MongoDB-backed server you need to have started the MongoDB database in another terminal window with `npm run mongo --prefix server-mongodb` (executed in the top-level directory) before executing `npm run start:mongo`.
 
@@ -17,6 +17,18 @@ The client application can be independently tested as described in the [CRA docu
 ```
 npm test --prefix client
 ```
+
+Some of the server applications also have test suites that can be run independently, e.g. `npm test --prefix server-sqlite`. See the specific server README for any setup that may be required.
+
+## Linting
+
+To ensure consistent style we use the CRA-recommended [Prettier](https://github.com/prettier/prettier) package. We installed it with
+
+```
+npm install --save-dev husky lint-staged prettier
+```
+
+and added the recommended configuration to automatically reformat code during the commit. That is whenever you commit your code, Prettier will automatically reformat your code during the commit process (as a "hook"). The hook is specified in the top-level `package.json` file. The client and each of the servers has its own ESLint configuration.
 
 ## Deploying to Heroku
 
@@ -32,22 +44,22 @@ Assuming that you have a Heroku account, have installed the [Heroku command line
 
 1. Create the Heroku app, e.g.:
 
-  ```
-  heroku apps:create
-  heroku addons:create mongolab:sandbox
-  ```
+    ```
+    heroku apps:create
+    heroku addons:create mongolab:sandbox
+    ```
 
 1. Seed the database. You will need the `MONGODB_URI` from `heroku config`.
 
-  ```
-  mongoimport --collection movies --jsonArray movies.json --uri="$MONGODB_URI"
-  ```
+    ```
+    mongoimport --collection movies --jsonArray movies.json --uri="$MONGODB_URI"
+    ```
 
 1. Push to Heroku
 
-  ```
-  git push heroku master
-  ```
+    ```
+    git push heroku master
+    ```
 
 ## Deploying to Basin
 
@@ -55,10 +67,10 @@ The Film Explorer can be deployed to basin (where it is typically run within `sc
 
 1. Create and seed the database from with `server-sqlite`:
 
-  ```
-  npx knex migrate:latest
-  npx knex seed:run
-  ```
+    ```
+    npx knex migrate:latest
+    npx knex seed:run
+    ```
 
 1. Start the server from the top-level directory
 
