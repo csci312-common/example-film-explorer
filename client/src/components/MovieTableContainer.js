@@ -10,7 +10,8 @@ function MovieTableContainer(props) {
     films = films.filter(movie => {
       const title = movie.title.toLowerCase();
       const desc = movie.overview.toLowerCase();
-      return title.includes(term) || desc.includes(term);
+      const date = movie.release_date;
+      return title.includes(term) || desc.includes(term) || date.includes(term);
     });
   }
 
