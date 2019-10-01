@@ -4,11 +4,13 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-immutable-proptypes": "^2.1.0",
     "react-scripts": "2.1.5",
-    "styled-components": "^4.1.3"
+    "styled-components": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,16 +29,15 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.9.1",
-    "jest-enzyme": "^7.0.1",
-    "jest-styled-components": "^6.3.1",
-    "react-test-renderer": "^16.8.1"
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest-enzyme": "^7.1.1",
+    "jest-styled-components": "^6.3.3",
+    "react-test-renderer": "^16.10.1"
   },
-  "author": "Christopher Andrews <candrews@middlebury.edu>",
   "contributors": [
-    "Michael Linderman <mlinderman@middlebury.edu>",
-    "Christopher Andrews <candrews@middlebury.edu>"
+    "Christopher Andrews <candrews@middlebury.edu>",
+    "Michael Linderman <mlinderman@middlebury.edu>"
   ],
   "license": "Apache-2.0"
 }

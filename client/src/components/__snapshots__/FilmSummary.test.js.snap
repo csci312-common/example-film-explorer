@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MovieSummary MovieSummary snapshot 1`] = `
+exports[`FilmSummary FilmSummary snapshot 1`] = `
 <styled.div>
-  <MovieTitle
+  <FilmTitle
     onClick={[Function]}
   >
     Jurassic World
-  </MovieTitle>
+  </FilmTitle>
   <StarRating
     rating={0}
     setRating={[Function]}

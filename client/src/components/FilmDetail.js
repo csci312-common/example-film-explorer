@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MovieSummary from './MovieSummary';
+import FilmSummary from './FilmSummary';
 
 const Detail = styled.div`
   margin: 20px 1em;
@@ -28,7 +28,7 @@ const Clear = styled.div`
   clear: both;
 `;
 
-function MovieDetail(props) {
+function FilmDetail(props) {
   return (
     <Detail>
       <LeftColumn>
@@ -38,7 +38,7 @@ function MovieDetail(props) {
         />
       </LeftColumn>
       <RightColumn>
-        <MovieSummary {...props} />
+        <FilmSummary {...props} />
         <hr />
         <Description>{props.overview}</Description>
       </RightColumn>
@@ -47,12 +47,12 @@ function MovieDetail(props) {
   );
 }
 
-// Copy and extend MovieSummary's PropTypes
-MovieDetail.propTypes = Object.assign({}, MovieSummary.propTypes, {
+// Copy and extend FilmSummary's PropTypes
+FilmDetail.propTypes = Object.assign({}, FilmSummary.propTypes, {
   overview: PropTypes.string.isRequired,
   poster_path: PropTypes.string.isRequired
 });
 
-MovieDetail.defaultProps = Object.assign({}, MovieSummary.defaultProps);
+FilmDetail.defaultProps = Object.assign({}, FilmSummary.defaultProps);
 
-export default MovieDetail;
+export default FilmDetail;

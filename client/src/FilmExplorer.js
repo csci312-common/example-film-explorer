@@ -1,98 +1,84 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { List } from 'immutable';
 
-// import movieData from '../public/movies.json';
-import MovieTableContainer from './components/MovieTableContainer';
+// import filmData from './films.json';
+import FilmTableContainer from './components/FilmTableContainer';
 import SearchBar from './components/SearchBar';
 
-class FilmExplorer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      sortType: 'title',
-      movies: []
-    };
+function FilmExplorer() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortType, setSortType] = useState('title');
+  const [films, setFilms] = useState(List());
 
-    // this.state.movies = movieData.movies;
-  }
-
-  componentDidMount() {
-    fetch('/api/movies/', {
-      headers: new Headers({ Accept: 'application/json' })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status_text);
-        }
-        return response.json();
-      })
-      .then(data => {
-        this.setState({ movies: data });
-      })
-      .catch(err => console.log(err)); // eslint-disable-line no-console
-  }
-
-  setRating(filmid, rating) {
-    const oldMovie = this.state.movies.find(movie => filmid === movie.id);
-    const newMovie = Object.assign({}, oldMovie, { rating });
-
-    fetch(`/api/movies/${filmid}`, {
-      method: 'PUT',
-      body: JSON.stringify(newMovie),
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status_text);
-        }
-        return response.json();
-      })
-      .then(updatedMovie => {
-        // It would tempting to save the index where we first found the film
-        // but it is possible that state.movies has changed in the meantime
-        const updatedMovies = this.state.movies.map(movie => {
-          if (movie.id === updatedMovie.id) {
-            return updatedMovie;
+  // load the film data
+  useEffect(() => {
+    const fetchData = () => {
+      fetch('/api/films/')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.status_text);
           }
-          return movie;
+          return response.json();
+        })
+        .then(data => {
+          setFilms(List(data));
+        })
+        .catch(err => console.log(err)); // eslint-disable-line no-console
+    };
+    fetchData();
+  }, []);
+
+  // change the rating of a film
+  const setRating = (filmid, rating) => {
+    const oldFilm = films.find(film => film.id === filmid);
+    const newFilm = { ...oldFilm, rating: rating };
+
+    fetch(`/api/films/${filmid}`, {
+      method: 'PUT',
+      body: JSON.stringify(newFilm),
+      headers: new Headers({ 'Content-type': 'application/json' })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status_text);
+        }
+        return response.json();
+      })
+      .then(updatedFilm => {
+        const alteredFilms = films.map(film => {
+          if (film.id === updatedFilm.id) {
+            return updatedFilm;
+          }
+          return film;
         });
-        this.setState({ movies: updatedMovies });
+        setFilms(alteredFilms);
       })
       .catch(err => console.log(err)); // eslint-disable-line no-console
-  }
+  };
 
-  render() {
-    let movieContents = <h2>Loading...</h2>;
-    if (this.state.movies.length > 0) {
-      movieContents = (
-        <MovieTableContainer
-          searchTerm={this.state.searchTerm}
-          movies={this.state.movies}
-          sortType={this.state.sortType}
-          setRatingFor={(id, rating) => this.setRating(id, rating)}
-        />
-      );
-    }
-
-    return (
-      <div className="FilmExplorer">
-        <SearchBar
-          searchTerm={this.state.searchTerm}
-          setTerm={term => {
-            this.setState({ searchTerm: term });
-          }}
-          sortType={this.state.sortType}
-          setType={type => {
-            this.setState({ sortType: type });
-          }}
-        />
-        {movieContents}
-      </div>
+  const mainContents =
+    films.size === 0 ? (
+      <h2>Loading...</h2>
+    ) : (
+      <FilmTableContainer
+        searchTerm={searchTerm}
+        films={films}
+        sortType={sortType}
+        setRatingFor={setRating}
+      />
     );
-  }
+
+  return (
+    <div className="FilmExplorer">
+      <SearchBar
+        searchTerm={searchTerm}
+        setTerm={setSearchTerm}
+        sortType={sortType}
+        setType={setSortType}
+      />
+      {mainContents}
+    </div>
+  );
 }
 
 export default FilmExplorer;

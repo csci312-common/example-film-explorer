@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { List } from 'immutable';
 
-import MovieTableContainer from './MovieTableContainer';
+import FilmTableContainer from './FilmTableContainer';
 
-const movies = [
+const films = List([
   {
     id: 135397,
     overview: 'case word substring',
@@ -20,14 +21,14 @@ const movies = [
     title: 'Word',
     vote_average: 7.7
   }
-];
+]);
 
-describe('MovieTableContainer', () => {
+describe('FilmTableContainer', () => {
   let comp;
   beforeEach(() => {
     comp = shallow(
-      <MovieTableContainer
-        movies={movies}
+      <FilmTableContainer
+        films={films}
         searchTerm=""
         sortType="title"
         setRatingFor={jest.fn}
@@ -35,39 +36,39 @@ describe('MovieTableContainer', () => {
     );
   });
 
-  describe('Filters movie by case keyword', () => {
-    test('Empty string does not filter movies', () => {
-      expect(comp.find('MovieTable').prop('movies')).toHaveLength(2);
+  describe('Filters film by case keyword', () => {
+    test('Empty string does not filter films', () => {
+      expect(comp.find('FilmTable').prop('films').size).toBe(2);
     });
 
     test('Any substring satisfies the filter', () => {
       comp.setProps({ searchTerm: 'sub' });
-      expect(comp.find('MovieTable').prop('movies')).toHaveLength(1);
+      expect(comp.find('FilmTable').prop('films').size).toBe(1);
     });
 
     test('Keyword is case insensitive', () => {
       comp.setProps({ searchTerm: 'Case' });
-      expect(comp.find('MovieTable').prop('movies')).toHaveLength(2);
+      expect(comp.find('FilmTable').prop('films').size).toBe(2);
     });
 
     test('Title and overview are tested', () => {
       comp.setProps({ searchTerm: 'word' });
-      expect(comp.find('MovieTable').prop('movies')).toHaveLength(2);
+      expect(comp.find('FilmTable').prop('films').size).toBe(2);
     });
   });
 
-  describe('Sorts movies by property', () => {
+  describe('Sorts films by property', () => {
     test('Sorts by title', () => {
       comp.setProps({ sortType: 'title' });
-      expect(comp.find('MovieTable')).toHaveProp('movies', movies);
+      expect(comp.find('FilmTable')).toHaveProp('films', films);
     });
 
     test('Sorts by year of release_date', () => {
       comp.setProps({ sortType: 'release_date' });
-      expect(comp.find('MovieTable')).toHaveProp('movies', [
-        movies[1],
-        movies[0]
-      ]);
+      expect(comp.find('FilmTable')).toHaveProp(
+        'films',
+        List([films.get(1), films.get(0)])
+      );
     });
   });
 });

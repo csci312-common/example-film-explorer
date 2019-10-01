@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import MovieSummary from './MovieSummary';
+import FilmSummary from './FilmSummary';
 
-const movie = {
+const film = {
   id: 135397,
   overview: 'Twenty-two years after the events of Jurassic Park...',
   release_date: '2015-06-12',
@@ -12,10 +12,10 @@ const movie = {
   vote_average: 6.9
 };
 
-describe('MovieSummary', () => {
-  test('MovieSummary snapshot', () => {
+describe('FilmSummary', () => {
+  test('FilmSummary snapshot', () => {
     const comp = shallow(
-      <MovieSummary {...movie} onClick={jest.fn} setRatingFor={jest.fn} />
+      <FilmSummary {...film} onClick={jest.fn} setRatingFor={jest.fn} />
     );
     expect(comp).toMatchSnapshot();
   });

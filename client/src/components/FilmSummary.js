@@ -12,7 +12,7 @@ const Title = styled.p`
   font-weight: bold;
   margin: 0px;
 `;
-Title.displayName = 'MovieTitle';
+Title.displayName = 'FilmTitle';
 
 const Year = styled.p`
   margin: 0px;
@@ -26,7 +26,7 @@ const TMDBScore = styled.p`
   font-size: smaller;
 `;
 
-function MovieSummary(props) {
+function FilmSummary(props) {
   return (
     <Summary>
       <Title onClick={() => props.onClick(props.id)}>{props.title}</Title>
@@ -42,7 +42,7 @@ function MovieSummary(props) {
   );
 }
 
-MovieSummary.propTypes = {
+FilmSummary.propTypes = {
   title: PropTypes.string.isRequired,
   release_date: PropTypes.string.isRequired,
   rating: StarRating.propTypes.rating, // eslint-disable-line react/no-typos
@@ -52,8 +52,8 @@ MovieSummary.propTypes = {
   setRatingFor: PropTypes.func.isRequired
 };
 
-MovieSummary.defaultProps = {
+FilmSummary.defaultProps = {
   rating: StarRating.defaultProps.rating
 };
 
-export default MovieSummary;
+export default FilmSummary;

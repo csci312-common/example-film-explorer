@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
-const SearchBarContainer=styled.div`
+const SearchBarContainer = styled.div`
   width: 100%;
   height: 100px;
   padding-top: 10px;
@@ -11,40 +10,40 @@ const SearchBarContainer=styled.div`
   padding-left: 50px;
   padding-right: 50px;
   color: white;
-  background: rgb(100,100,100);
+  background: rgb(100, 100, 100);
 `;
 
-const SearchBarContents=styled.div`
+const SearchBarContents = styled.div`
   width: 300px;
 `;
 
-const SearchSelect=styled.select`
+const SearchSelect = styled.select`
   font-size: 12px;
 `;
 
-const Title=styled.h1`
+const Title = styled.h1`
   color: white;
   font-family: Impact, Charcoal, sans-serif;
   margin: 10px 0px;
 `;
 
-function SearchBar(props) {
+function SearchBar({ searchTerm, sortType, setTerm, setType }) {
   const searchField = (
     <input
       type="text"
       placeholder="Search"
-      value={props.searchTerm}
+      value={searchTerm}
       onChange={event => {
-        props.setTerm(event.target.value);
+        setTerm(event.target.value);
       }}
     />
   );
 
   const sortTool = (
     <SearchSelect
-      value={props.sortType}
+      value={sortType}
       onChange={event => {
-        props.setType(event.target.value);
+        setType(event.target.value);
       }}
     >
       <option value="title">Title</option>
@@ -57,8 +56,8 @@ function SearchBar(props) {
     <SearchBarContainer>
       <Title>Film Explorer</Title>
       <SearchBarContents>
-      {searchField} 
-      <p>order by {sortTool}</p>
+        {searchField}
+        <p>order by {sortTool}</p>
       </SearchBarContents>
     </SearchBarContainer>
   );

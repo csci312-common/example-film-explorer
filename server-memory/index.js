@@ -31,43 +31,43 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-let movies;
-const cleanMovies = new Map();
+let films;
+const cleanfilms = new Map();
 
-app.get('/api/movies', (request, response) => {
-  response.send(Array.from(movies.values()));
+app.get('/api/films', (request, response) => {
+  response.send(Array.from(films.values()));
 });
 
-app.get('/api/movies/:id', (request, response) => {
-  response.send(movies.get(request.params.id));
+app.get('/api/films/:id', (request, response) => {
+  response.send(films.get(request.params.id));
 });
 
-app.put('/api/movies/:id', (request, response) => {
-  const movieId = parseInt(request.params.id, 10);
-  const newMovie = request.body;
-  if (newMovie.id && newMovie.id === movieId && movies.get(movieId)) {
-    const mergedMovie = Object.assign({}, movies.get(movieId), newMovie);
-    movies.set(mergedMovie.id, mergedMovie);
-    response.send(mergedMovie);
+app.put('/api/films/:id', (request, response) => {
+  const filmId = parseInt(request.params.id, 10);
+  const newfilm = request.body;
+  if (newfilm.id && newfilm.id === filmId && films.get(filmId)) {
+    const mergedfilm = Object.assign({}, films.get(filmId), newfilm);
+    films.set(mergedfilm.id, mergedfilm);
+    response.send(mergedfilm);
   } else {
-    console.error(`Received bad movie item [${movieId}]`);
+    console.error(`Received bad film item [${filmId}]`);
     console.error(request.body);
-    response.status(500).send({ error: 'Invalid movie object received' });
+    response.status(500).send({ error: 'Invalid film object received' });
   }
 });
 
-// Load movie data before starting the server
+// Load film data before starting the server
 // path.join automatically inserts correct file separator
-fs.readFile(path.join(__dirname, 'movies.json'), (err, contents) => {
+fs.readFile(path.join(__dirname, 'films.json'), (err, contents) => {
   const data = JSON.parse(contents);
-  data.forEach(movie => {
-    cleanMovies.set(movie.id, movie);
+  data.forEach(film => {
+    cleanfilms.set(film.id, film);
   });
-  movies = new Map(cleanMovies);
-  // reset the movie collection periodically
+  films = new Map(cleanfilms);
+  // reset the film collection periodically
   setInterval(() => {
-    movies = new Map(cleanMovies);
-  }, 300000); // reset the movies every five minutes
+    films = new Map(cleanfilms);
+  }, 300000); // reset the films every five minutes
 
   // Don't start server until data loaded
   // We create the server explicitly (instead of using app.listen()) to

@@ -19,10 +19,9 @@
     "server-mongodb/node_modules"
   ],
   "keywords": [],
-  "author": "Michael Linderman <mlinderman@middlebury.edu>",
   "contributors": [
-    "Michael Linderman <mlinderman@middlebury.edu>",
-    "Christopher Andrews <candrews@middlebury.edu>"
+    "Christopher Andrews <candrews@middlebury.edu>",
+    "Michael Linderman <mlinderman@middlebury.edu>"
   ],
   "license": "Apache-2.0",
   "devDependencies": {

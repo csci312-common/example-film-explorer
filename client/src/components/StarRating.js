@@ -10,15 +10,15 @@ const EmptyStar = styled.span`
   color: rgb(200, 200, 200);
 `;
 
-function StarRating(props) {
+function StarRating({ rating, setRating }) {
   const stars = [];
 
-  for (let i = 1; i <= props.rating; i += 1) {
+  for (let i = 1; i <= rating; i += 1) {
     stars.push(
       <FilledStar
         key={i}
         onClick={() => {
-          props.setRating(i);
+          setRating(i);
         }}
       >
         ★
@@ -26,12 +26,12 @@ function StarRating(props) {
     );
   }
 
-  for (let i = props.rating + 1; i <= 5; i += 1) {
+  for (let i = rating + 1; i <= 5; i += 1) {
     stars.push(
       <EmptyStar
         key={i}
         onClick={() => {
-          props.setRating(i);
+          setRating(i);
         }}
       >
         ★
