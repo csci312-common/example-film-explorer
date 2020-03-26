@@ -49,10 +49,10 @@ Assuming that you have a Heroku account, have installed the [Heroku command line
     heroku addons:create mongolab:sandbox
     ```
 
-1. Seed the database. You will need the `MONGODB_URI` from `heroku config`.
+1. Seed the database by executing the following. You will need the `MONGODB_URI` from `heroku config`.
 
     ```
-    mongoimport --collection movies --jsonArray movies.json --uri="$MONGODB_URI"
+    mongoimport --collection films --jsonArray server-mongodb/films.json --uri="$(heroku config:get MONGODB_URI)"
     ```
 
 1. Push to Heroku
@@ -64,6 +64,11 @@ Assuming that you have a Heroku account, have installed the [Heroku command line
 ## Deploying to Basin
 
 The Film Explorer can be deployed to basin (where it is typically run within `screen`). The current configuration deploys the sqlite-backed server.
+
+1. Build the production application from the top-level directory
+    ```
+    npm run basin-postbuild
+    ```
 
 1. Create and seed the database from with `server-sqlite`:
 

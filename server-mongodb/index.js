@@ -31,19 +31,19 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Allow cross-origin request
+// Allow cross-origin requests
 const corsOptions = {
   methods: ['GET', 'PUT', 'POST'],
   origin: '*',
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
 };
 
 // Set up express middleware
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.get('/api/movies', (request, response) => {
-  db.collection('movies')
+app.get('/api/films', (request, response) => {
+  db.collection('films')
     .find()
     .toArray((err, documents) => {
       if (err) {
@@ -55,11 +55,11 @@ app.get('/api/movies', (request, response) => {
     });
 });
 
-app.get('/api/movies/:id', (request, response) => {
-  const movieId = parseInt(request.params.id, 10);
+app.get('/api/films/:id', (request, response) => {
+  const filmId = parseInt(request.params.id, 10);
 
-  db.collection('movies')
-    .find({ id: movieId })
+  db.collection('films')
+    .find({ id: filmId })
     .next((err, document) => {
       if (err) {
         console.error(err);
@@ -70,15 +70,15 @@ app.get('/api/movies/:id', (request, response) => {
     });
 });
 
-app.put('/api/movies/:id', (request, response) => {
-  const movieId = parseInt(request.params.id, 10);
+app.put('/api/films/:id', (request, response) => {
+  const filmId = parseInt(request.params.id, 10);
 
-  const movie = request.body;
-  movie._id = ObjectID.createFromHexString(movie._id);
+  const film = request.body;
+  film._id = ObjectID.createFromHexString(film._id);
 
-  db.collection('movies').findOneAndUpdate(
-    { id: movieId },
-    { $set: movie },
+  db.collection('films').findOneAndUpdate(
+    { id: filmId },
+    { $set: film },
     { returnOriginal: false },
     (err, result) => {
       if (err || result.ok !== 1) {
@@ -91,16 +91,20 @@ app.put('/api/movies/:id', (request, response) => {
   );
 });
 
-MongoClient.connect(mongoURL, { useNewUrlParser: true }, (err, database) => {
-  if (err) {
-    console.error(err);
-  } else {
-    // Don't start server unless we have successfully connect to the database
-    db = database.db(url.parse(mongoURL).pathname.slice(1)); // Extract database name
+MongoClient.connect(
+  mongoURL,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, database) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // Don't start server unless we have successfully connect to the database
+      db = database.db(url.parse(mongoURL).pathname.slice(1)); // Extract database name
 
-    // We create the server explicitly (instead of using app.listen()) to
-    // provide an example of how we would create a https server
-    const server = http.createServer(app).listen(process.env.PORT || 3001);
-    console.log('Listening on port %d', server.address().port);
+      // We create the server explicitly (instead of using app.listen()) to
+      // provide an example of how we would create a https server
+      const server = http.createServer(app).listen(process.env.PORT || 3001);
+      console.log('Listening on port %d', server.address().port);
+    }
   }
-});
+);

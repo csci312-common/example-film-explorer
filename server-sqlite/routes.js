@@ -9,7 +9,7 @@ const knexConfig = require('./knexfile');
 const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'development']);
 
 const { Model } = require('objection');
-const Movie = require('./models/Movie');
+const Film = require('./models/Film');
 
 // Bind all Models to a knex instance.
 Model.knex(knex);
@@ -29,23 +29,22 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Allow cross-origin requests
 const corsOptions = {
   methods: ['GET', 'PUT', 'POST'],
   origin: '*',
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
 };
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(router); // Use express-promise-router
 
-// express-promise-router enables to return a Promise
-// in a router handler. If that Promise is rejected the
-// error handling middleware will be invoked.
+// express-promise-router enables us to return a Promise in a route handler.
+// If that Promise is rejected the error handling middleware will be invoked.
 
-// A very simple error handler. In a production setting you would
-// not want to send information about the inner workings of your
-// application or database.
+// A very simple error handler. In a production setting you would not want to send
+// information about the inner workings of your application or database to the requester.
 app.use((error, request, response, next) => {
   if (response.headersSent) {
     next(error);
@@ -55,38 +54,41 @@ app.use((error, request, response, next) => {
     .send(error.data || error.message || {});
 });
 
-router.get('/api/movies', (request, response) => {
+router.get('/api/films', (request, response) => {
+  // With almost any kind of related we want to take advantage of the ORM's capabilities
+  // to fetch all the data in "one shot". Here we tell objection to fetch the films and
+  // all of the associated genres. With this "eager" queries you can early reconstruct
+  // complex objects from your database tables in one action.
+
   // eslint-disable-line arrow-body-style
-  return Movie.query()
-    .eager('[genres]')
-    .then(movies => {
+  return Film.query()
+    .withGraphFetched('genres')
+    .then((movies) => {
       response.send(movies);
     });
 });
 
-router.get('/api/movies/:id', (request, response) => {
+router.get('/api/films/:id', (request, response) => {
   // eslint-disable-line arrow-body-style
-  return Movie.query()
+  return Film.query()
     .findById(request.params.id)
-    .eager('[genres]')
-    .then(movie => {
+    .withGraphFetched('genres')
+    .then((movie) => {
       response.send(movie);
     });
 });
 
 // Use upsertGraphAndFetch to update genres when updating movie
-router.put('/api/movies/:id', (request, response, next) => {
-  const updatedMovie = Object.assign({}, request.body, {
-    id: parseInt(request.params.id, 10)
-  });
-  return Movie.query()
-    .upsertGraphAndFetch(updatedMovie, { insertMissing: true })
-    .then(movie => {
+router.put('/api/films/:id', (request, response, next) => {
+  const updatedFilm = { ...request.body, id: parseInt(request.params.id, 10) };
+  return Film.query()
+    .upsertGraphAndFetch(updatedFilm, { insertMissing: true })
+    .then((movie) => {
       response.send(movie);
     });
 });
 
 module.exports = {
   app,
-  knex
+  knex,
 };

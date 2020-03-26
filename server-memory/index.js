@@ -21,11 +21,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Allow cross-origin request
+// Allow cross-origin requests
 const corsOptions = {
   methods: ['GET', 'PUT', 'POST'],
   origin: '*',
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
 };
 
 app.use(cors(corsOptions));
@@ -46,7 +46,7 @@ app.put('/api/films/:id', (request, response) => {
   const filmId = parseInt(request.params.id, 10);
   const newfilm = request.body;
   if (newfilm.id && newfilm.id === filmId && films.get(filmId)) {
-    const mergedfilm = Object.assign({}, films.get(filmId), newfilm);
+    const mergedfilm = { ...films.get(filmId), ...newfilm };
     films.set(mergedfilm.id, mergedfilm);
     response.send(mergedfilm);
   } else {
@@ -60,14 +60,15 @@ app.put('/api/films/:id', (request, response) => {
 // path.join automatically inserts correct file separator
 fs.readFile(path.join(__dirname, 'films.json'), (err, contents) => {
   const data = JSON.parse(contents);
-  data.forEach(film => {
+  data.forEach((film) => {
     cleanfilms.set(film.id, film);
   });
   films = new Map(cleanfilms);
-  // reset the film collection periodically
+
+  // Reset the film collection every five minutes
   setInterval(() => {
     films = new Map(cleanfilms);
-  }, 300000); // reset the films every five minutes
+  }, 300000);
 
   // Don't start server until data loaded
   // We create the server explicitly (instead of using app.listen()) to

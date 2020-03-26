@@ -2,7 +2,7 @@
 
 A server for the CS312 film-explorer example backed by a RDBMS (e.g. sqlite3). This server demonstrates the use of an ORM, [Objection.js](http://vincit.github.io/objection.js/) with associations.
 
-The multiple genres for a movie are represented as a HasMany relation to the `Genre` table. The corresponding names for the genres can be found in the `genres.json` file. The JSON parsing methods are overridden to maintain the same `genre_ids` array-based interface as in the source JSON file (and as would be returned by the MongoDB server).
+The multiple genres for a film are represented as a HasMany relation to the `Genre` table. The corresponding names for the genres can be found in the `genres.json` file. The JSON parsing methods are overridden to maintain the same `genre_ids` array-based interface as in the source JSON file (and as would be returned by the MongoDB server).
 
 The movie data was sourced from [themoviedb](https://www.themoviedb.org).
 

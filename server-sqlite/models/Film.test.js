@@ -1,10 +1,10 @@
 /* eslint-disable arrow-body-style */
 const knexConfig = require('../knexfile'); // eslint-disable-line
 const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'test']);
-const Movie = require('./Movie');
+const Film = require('./Film');
 const Genre = require('./Genre');
 
-const movie = {
+const film = {
   id: 135397,
   overview: 'Twenty-two years after ...',
   release_date: '2015-06-12',
@@ -12,22 +12,22 @@ const movie = {
   title: 'Jurassic World',
   vote_average: 6.9,
   rating: null,
-  genre_ids: [12, 28, 53, 878]
+  genre_ids: [12, 28, 53, 878],
 };
 
-describe('FilmExplorer Movie Model', () => {
+describe('FilmExplorer Film Model', () => {
   test('Model translates genre_ids to Genres and back again', () => {
-    const modelMovie = Movie.fromJson(movie);
-    expect(modelMovie).toHaveProperty(
+    const modelFilm = Film.fromJson(film);
+    expect(modelFilm).toHaveProperty(
       'genres',
       expect.arrayContaining(
-        movie.genre_ids.map(genreId => ({ genreId, movieId: movie.id }))
+        film.genre_ids.map((genreId) => ({ genreId, filmId: film.id }))
       )
     );
-    expect(modelMovie.toJSON()).toEqual(movie);
+    expect(modelFilm.toJSON()).toEqual(film);
   });
 
-  describe('Film Explorer Movie Schema', () => {
+  describe('Film Explorer Film Schema', () => {
     beforeEach(() => {
       return knex.migrate
         .rollback()
@@ -35,17 +35,17 @@ describe('FilmExplorer Movie Model', () => {
         .then(() => knex.seed.run());
     });
 
-    test('Deleting Movies deletes Genres', () => {
+    test('Deleting Films deletes Genres', () => {
       return Genre.query()
-        .then(genres => {
+        .then((genres) => {
           expect(genres).not.toHaveLength(0);
-          return Movie.query().delete();
+          return Film.query().delete();
         })
-        .then(numDeleted => {
+        .then((numDeleted) => {
           expect(numDeleted).toBe(1);
           return Genre.query();
         })
-        .then(genres => {
+        .then((genres) => {
           expect(genres).toHaveLength(0);
         });
     });

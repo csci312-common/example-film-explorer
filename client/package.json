@@ -6,21 +6,18 @@
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
-    "react-immutable-proptypes": "^2.1.0",
-    "react-scripts": "2.1.5",
-    "styled-components": "^4.4.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-immutable-proptypes": "^2.2.0",
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "lint": "eslint src"
   },
   "browserslist": [
     ">0.2%",
@@ -29,11 +26,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "jest-enzyme": "^7.1.1",
-    "jest-styled-components": "^6.3.3",
-    "react-test-renderer": "^16.10.1"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint-config-prettier": "^6.10.1",
+    "jest-enzyme": "^7.1.2",
+    "jest-styled-components": "^7.0.0",
+    "react-test-renderer": "^16.13.1"
   },
   "contributors": [
     "Christopher Andrews <candrews@middlebury.edu>",

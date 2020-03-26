@@ -1,12 +1,9 @@
 /* eslint-disable func-names */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
-exports.up = function(knex, Promise) {
+exports.up = function (knex) {
   return knex.schema
-    .createTable('Movie', table => {
-      table
-        .integer('id')
-        .unsigned()
-        .primary();
+    .createTable('Film', (table) => {
+      table.integer('id').unsigned().primary();
       table.text('overview');
       table.string('release_date');
       table.string('poster_path');
@@ -14,18 +11,18 @@ exports.up = function(knex, Promise) {
       table.float('vote_average');
       table.integer('rating');
     })
-    .createTable('Genre', table => {
+    .createTable('Genre', (table) => {
       table
-        .integer('movieId')
+        .integer('filmId')
         .unsigned()
         .references('id')
-        .inTable('Movie')
+        .inTable('Film')
         .onDelete('CASCADE');
       table.integer('genreId');
-      table.primary(['movieId', 'genreId']);
+      table.primary(['filmId', 'genreId']);
     });
 };
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('Genre').dropTableIfExists('Movie');
+exports.down = function (knex) {
+  return knex.schema.dropTableIfExists('Genre').dropTableIfExists('Film');
 };

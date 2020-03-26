@@ -9,7 +9,7 @@ class Genre extends Model {
 
   // Indicate our composite primary key (instead of id)
   static get idColumn() {
-    return ['movieId', 'genreId'];
+    return ['filmId', 'genreId'];
   }
 
   // This object defines the relations to other models.
@@ -20,12 +20,12 @@ class Genre extends Model {
         // The related model. This can be either a Model subclass constructor or an
         // absolute file path to a module that exports one. We use the file path version
         // here to prevent require loops.
-        modelClass: path.join(__dirname, 'Movie'),
+        modelClass: path.join(__dirname, 'Film'),
         join: {
-          from: 'Genre.movieId',
-          to: 'Movie.id'
-        }
-      }
+          from: 'Genre.filmId',
+          to: 'Film.id',
+        },
+      },
     };
   }
 }

@@ -9,7 +9,7 @@ Run `npm install` to install the dependencies and create a `./data` directory (a
 The repository includes some sample data to seed the database. To seed the database, first start the database in one terminal with `npm run mongo` (which is equivalent to `mongod --config mongod.conf`) and then in a second terminal import the seed data with
 
 ```
-mongoimport --db film-explorer --collection movies --jsonArray movies.json --port 5000
+mongoimport --db film-explorer --collection films --jsonArray films.json --port 5000
 ```
 
 ## Running

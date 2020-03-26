@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 const request = require('supertest');
-const { app, knex } = require('./app');
+const { app, knex } = require('./routes');
 
 const movie = {
   id: 135397,
@@ -10,7 +10,7 @@ const movie = {
   title: 'Jurassic World',
   vote_average: 6.9,
   rating: null,
-  genre_ids: [12, 28, 53, 878]
+  genre_ids: [12, 28, 53, 878],
 };
 
 describe('Film Explorer API', () => {
@@ -28,37 +28,37 @@ describe('Film Explorer API', () => {
   // SuperTest has several helpful methods for conveniently testing responses
   // that we can use to make the tests more concise
 
-  test('GET /api/movies should return all movies (mostly SuperTest)', () => {
+  test('GET /api/films should return all movies (mostly SuperTest)', () => {
     return request(app)
-      .get('/api/movies')
+      .get('/api/films')
       .expect(200)
       .expect('Content-Type', /json/)
       .expect([movie]);
   });
 
-  test('PUT /api/movies/:id should update the movie (mostly SuperTest)', () => {
-    const newMovie = Object.assign({}, movie, { rating: 4 });
+  test('PUT /api/films/:id should update the movie (mostly SuperTest)', () => {
+    const newMovie = { ...movie, rating: 4 };
     return request(app)
-      .put('/api/movies/135397')
+      .put('/api/films/135397')
       .send(newMovie)
       .expect(200)
       .expect('Content-Type', /json/)
       .expect(newMovie);
   });
 
-  test('PUT /api/movies/:id should update the movie genres', () => {
-    const newMovie = Object.assign({}, movie, { genre_ids: [12, 42] });
+  test('PUT /api/films/:id should update the movie genres', () => {
+    const newMovie = { ...movie, genre_ids: [12, 42] };
     return request(app)
-      .put('/api/movies/135397')
+      .put('/api/films/135397')
       .send(newMovie)
       .expect(200)
       .expect('Content-Type', /json/)
       .expect(newMovie);
   });
 
-  test('GET /api/movies/:id should return movie (mostly SuperTest)', () => {
+  test('GET /api/films/:id should return movie (mostly SuperTest)', () => {
     return request(app)
-      .get(`/api/movies/${movie.id}`)
+      .get(`/api/films/${movie.id}`)
       .expect(200)
       .expect('Content-Type', /json/)
       .expect(movie);

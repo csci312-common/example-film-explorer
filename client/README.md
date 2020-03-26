@@ -22,29 +22,8 @@ npm install --save-dev enzyme enzyme-adapter-react-16 react-test-renderer
 
 ### Linting with ESLint
 
-The lint configuration built into CRA was extended with the AirBnB configuration based on this [blog post](https://groundberry.github.io/development/2017/06/11/create-react-app-linting-all-the-things.html). Using ESLint outside of `react-scripts` may not be supported, but appears to work.
+We utilize the ESLint configuration built into CRA (which is more permissive than the AirBnB configuration). The linter is run automatically by the CRA development server, or can be run manually with `npm run lint`.
 
-The configuration was installed with:
+The AirBnB rules do not integrate smoothly with the current version of CRA. Thus we have added our own rules to `.eslintrc.json`. Thus you will get a different, and more expansive set of warnings and errors, when you run `npm run lint` than with the output provided by the CRA development server.
 
-```
-npx install-peerdeps --dev eslint-config-airbnb
-```
-
-And the client .eslintrc.json file configured to use the AirBnB rules, and globally configured to allow JSX in .js files.
-
-```
-{
-  "extends": "airbnb",
-  "env": {
-    "browser": true,
-    "jest": true
-  },
-  "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-  }
-}
-```
-
-Other rules are disabled in specific files.
-
-The linter is run automatically by the CRA development server, or can be run manually with `npx eslint .` (or via `npm run lint`). Include the `--fix` option to `eslint` to automatically fix many formatting errors.
+The linter is run automatically by the CRA development server, or can be run manually with `npx eslint src` (or via `npm run lint`). Include the `--fix` option to `eslint` to automatically fix many formatting errors.
